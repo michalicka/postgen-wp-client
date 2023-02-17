@@ -5,6 +5,12 @@ include_once('./functions.php');
 
 header('Content-Type: application/json');
 
+if (!get_option('pgwc_enabled')) {
+  http_response_code(401);
+  echo json_encode(['error' => 'Disabled']);
+  exit();
+}
+
 if (!isset($_SERVER['HTTP_AUTHORIZATION']) 
   || empty($_SERVER['HTTP_AUTHORIZATION']) 
   || $_SERVER['HTTP_AUTHORIZATION'] !== 'Bearer '.get_option('pgwc_api_key')
