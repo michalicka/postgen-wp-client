@@ -1,0 +1,47 @@
+<div class="wrap">
+<h2>Postgen Client Options</h2>
+<form method="post" action="options.php">
+<input type="hidden" id="_wpnonce" name="_wpnonce" value="{{ _wpnonce }}" />
+<table class="form-table">
+    <tr valign="top">
+        <th scope="row">Plugin Enabled</th>
+        <td><select name="pgwc_enabled">
+            <option value="1" {{ pgwc_enabled_1 }} >Yes</option>
+            <option value="0" {{ pgwc_enabled_0 }} >No</option>
+        </select></td>
+    </tr>
+    <tr valign="top">
+        <th scope="row">API Url</th>
+        <td><input type="text" name="pgwc_api_url" style="width: 600px;" value="{{ pgwc_api_url }}" readonly></td>
+    </tr>
+    <tr valign="top">
+        <th scope="row">API Key</th>
+        <td><input type="text" name="pgwc_api_key" style="width: 600px;" value="{{ pgwc_api_key }}"></td>
+    </tr>
+    <tr valign="top">
+        <th scope="row">Default status</th>
+        <td><select name="pgwc_status">
+            <option value="publish" {{ pgwc_status_publish }} >publish</option>
+            <option value="future" {{ pgwc_status_future }} >future</option>
+            <option value="draft" {{ pgwc_status_draft }} >draft</option>
+            <option value="pending" {{ pgwc_status_pending }} >pending</option>
+            <option value="private" {{ pgwc_status_private }} >private</option>
+        </select></td>
+    </tr>
+    <tr valign="top">
+        <th scope="row">Default category</th>
+        <td>{{ pgwc_category }}</td>
+    </tr>
+    <tr valign="top">
+        <th scope="row">Author ID</th>
+        <td>{{ pgwc_author }}</td>
+    </tr>
+</table>
+<input type="hidden" name="action" value="update" />
+<input type="hidden" name="page_options" value="pgwc_enabled,pgwc_api_key,pgwc_category_id,pgwc_author_id" />
+
+<p class="submit">
+<input type="submit" name="Submit" value="{{ submit_label }}" />
+</p>
+</form>
+</div>
