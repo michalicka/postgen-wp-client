@@ -27,11 +27,11 @@ function pgwc_has_same_image($post_id, $name)
     return false;    
 }
 
-function pgwc_insert_image($post_id, $image_url)
+function pgwc_insert_image($post_id, $image_url, $image_data = null)
 {
     $image_filename = basename($image_url);
     if (strpos($image_filename, '.') === false) $image_filename .= ".jpg";
-    $content = pgwc_download_file($image_url);
+    $content = $image_data ? base64_decode($image_data) : pgwc_download_file($image_url);
     if ($content === false) return;
 
     $hash = sha1($content);

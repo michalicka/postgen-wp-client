@@ -11,10 +11,9 @@ if (!get_option('pgwc_enabled')) {
     exit();
 }
 
-if (!isset($_SERVER['HTTP_AUTHORIZATION']) 
-    || empty($_SERVER['HTTP_AUTHORIZATION']) 
-    || $_SERVER['HTTP_AUTHORIZATION'] !== 'Bearer '.get_option('pgwc_api_key')
-) {
+$token = $_SERVER['HTTP_AUTHORIZATION'] ?? getallheaders()['Authorization'] ?? '';
+
+if ($token !== 'Bearer '.get_option('pgwc_api_key')) {
     http_response_code(401);
     echo json_encode(['error' => 'Unauthorized']);
     exit();
@@ -37,7 +36,7 @@ $wpPost = [
 
 if ($data->action === 'create') {
     $postId = wp_insert_post($wpPost);
-    if ($image = ($post->image ?? '')) pgwc_insert_image($postId, $image);
+    if ($imageUrl = ($post->image_url ?? '')) pgwc_insert_image($postId, $imageUrl, $post->image_data ?? null);
     
     echo json_encode([
         'success' => true,
@@ -50,7 +49,7 @@ if ($data->action === 'create') {
     $wpPost['ID'] = $post->id ?? null;
 
     $postId = wp_update_post($wpPost);
-    if ($image = ($post->image ?? '')) pgwc_insert_image($postId, $image);
+    if ($imageUrl = ($post->image_url ?? '')) pgwc_insert_image($postId, $imageUrl, $post->image_data ?? null);
 
     echo json_encode([
         'success' => true,
