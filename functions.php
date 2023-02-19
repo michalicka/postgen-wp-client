@@ -1,5 +1,9 @@
 <?php
 
+if ( ! function_exists( 'wp_crop_image' ) ) {
+    include( ABSPATH . 'wp-admin/includes/image.php' );
+}
+
 function pgwc_download_file($url) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -52,6 +56,8 @@ function pgwc_insert_image($post_id, $image_url, $image_data = null)
     );
 
     $attachment_id = wp_insert_attachment( $attachment, $image_path, $post_id );
+    $attachment_data = wp_generate_attachment_metadata( $attachment_id, $image_path );
+    wp_update_attachment_metadata( $attachment_id, $attachment_data);
 
     set_post_thumbnail( $post_id, $attachment_id );    
 }
